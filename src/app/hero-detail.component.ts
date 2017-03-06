@@ -19,13 +19,21 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location
   ) { }
+
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.heroService.getHero(+params['id'])) //'+' converts param to number
       .subscribe(hero => this.hero = hero);
   }
+
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    this.heroService.update(this.hero)
+      .then(() => this.goBack());
+  }
+
 }
 
